@@ -24,7 +24,7 @@ public class test1 {
 	
 	public void Readnumbers(char[] data)
 	{
-		
+		System.out.println(data);
 	}
 	
 }
