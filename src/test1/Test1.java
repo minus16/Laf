@@ -1,6 +1,6 @@
 package test1;
 
-public class test1 {
+public class Test1 {
 	
 	//test cases
 	static final char[] testcase1 = {};
@@ -11,7 +11,7 @@ public class test1 {
 	static final char[] testcase6 = {13,14,15,16,20,23,24,25,100};
 	
 	
-	public test1()
+	public Test1()
 	{
 		Readnumbers(testcase1);
 		Readnumbers(testcase2);
