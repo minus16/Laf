@@ -10,6 +10,7 @@ public class Test2 {
 	static final char TAG_START = '<';
 	static final char TAG_END = '>';
 	static final char TAG_SLASH = '/';
+	static final char SPACE = ' ';
 
 	
 	public Test2()
@@ -26,20 +27,80 @@ public class Test2 {
 	
 	private void reverseWithTag(String data)
 	{
-		ArrayList<String> arr_str = new ArrayList<String>();
+		String rString = reverseString(data);
+		System.out.println(rString);
 		
-		String[] splited = data.split("\\s+", -1);
+				
+		char[] cData = rString.toCharArray();	
 		
-		for ( String s :splited)
+		int nTagStartIndex = 0;
+		int nTagEndIndex = 0;
+		
+		//find tags and reverse word
+		for(int i=0 ; i<cData.length-1; i++)
 		{
-			System.out.println(s);
+			if(cData[i]==TAG_END)
+			{
+				nTagStartIndex= i;
+			}
+			else if(cData[i]==TAG_START)
+			{
+				nTagEndIndex = i;
+				cData = reverseStringWithIndex(cData, nTagStartIndex, nTagEndIndex);
+			}
 		}
-
+		
+		String sibal2 = String.valueOf(cData);
+		System.out.println(sibal2);
+				
+		
+		//switch tags
+		for(int i=0 ; i<cData.length-1; i++)
+		{
+			
+			//find start TAG
+			if(cData[i]==TAG_START)
+			{
+				nTagStartIndex= i;
+			}
+			else if(cData[i]==TAG_END)
+			{
+				nTagEndIndex = i;
+			}
+			
+			//find end TAG
+			
+			
+			
+		}
+		
+		
+	}
+	
+	private ArrayList<String> splitword(String s)
+	{
+		ArrayList<String> result = new ArrayList<String>();
+		return result;
 	}
 	
 	private String reverseString(String s)
 	{
 		return (new StringBuffer(s)).reverse().toString();
+	}
+	
+	private char[] reverseStringWithIndex(char[] c, int start, int end)
+	{
+		while (start < end)
+		{
+			char temp = c[start];
+			c[start]=c[end];
+			c[end]= temp;
+			
+			start++;
+			end--;
+		}
+		
+		return c; 
 	}
 	
 	
