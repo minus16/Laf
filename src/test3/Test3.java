@@ -17,7 +17,20 @@ public class Test3 {
 	
 	public Test3()
 	{
+		//game1
+		Poker g1Player1 = new Poker(t1_p1);
+		Poker g1Player2 = new Poker(t1_p2);
 		
+		
+		//game2
+		Poker g2Player1 = new Poker(t2_p1);
+		Poker g2Player2 = new Poker(t2_p2);
+		
+		
+		
+		//game3
+		Poker g3Player1 = new Poker(t3_p1);
+		Poker g3Player2 = new Poker(t3_p2);
 	}
 
 }
