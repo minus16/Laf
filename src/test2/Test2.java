@@ -15,13 +15,6 @@ public class Test2 {
 	
 	public Test2()
 	{
-		//char[] result = reverseWithTag(testcase1);
-		//System.out.print("test result : ");
-		//System.out.println(result);
-		
-		//System.out.print("test result : ");
-		//System.out.println(reverseString(testcase1));
-		
 		reverseWithTag(testcase1);
 	}
 	
@@ -53,26 +46,7 @@ public class Test2 {
 		String sibal2 = String.valueOf(cData);
 		System.out.println(sibal2);
 				
-		
 		//switch tags
-		for(int i=0 ; i<cData.length-1; i++)
-		{
-			
-			//find start TAG
-			if(cData[i]==TAG_START)
-			{
-				nTagStartIndex= i;
-			}
-			else if(cData[i]==TAG_END)
-			{
-				nTagEndIndex = i;
-			}
-			
-			//find end TAG
-			
-			
-			
-		}
 		
 		
 	}
