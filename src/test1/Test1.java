@@ -44,12 +44,10 @@ public class Test1 {
 	
 	private String Readnumbers(int[] data)
 	{
-		
 		String result = "";	
 
 		//prevNumber
 		int nPrevNumber = -1;
-		
 		
 		//flag
 		boolean bSequenceFlag = false;
@@ -81,8 +79,7 @@ public class Test1 {
 						{
 							result += data[i];
 						}
-					}
-					
+					}	
 				}
 				else
 				{
@@ -96,8 +93,7 @@ public class Test1 {
 					else
 					{
 						result += COMMA;
-						result += data[i];
-					
+						result += data[i];	
 					}
 					
 				}
@@ -105,9 +101,6 @@ public class Test1 {
 			nPrevNumber = data[i];
 		}
 		
-		return result;
-		
+		return result;	
 	}
-	
- 	
 }

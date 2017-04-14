@@ -1,7 +1,6 @@
 package test2;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Test2 {
 	
