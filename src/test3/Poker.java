@@ -37,8 +37,7 @@ public class Poker {
 	private int getRank()
 	{
 		int rank = HIGH_CARD;
-		
-		
+
 		for(int i=0 ; i < mHand.length ; i++)
 		{
 			for(int j=0 ; j < mHand[i].length; j++)
@@ -105,7 +104,6 @@ public class Poker {
 				bStraight= true;
 		}
 		
-		System.out.println("Straight : " + Straight);
 		
 		//find sameEmblem
 		boolean bFlush = false;
@@ -133,12 +131,12 @@ public class Poker {
 			rank = TRIPLE;
 		}
 		//STRAIGHT
-		if(Straight==5)
+		if(bStraight==true)
 		{
 			rank = STRAIGHT;
 		}
 		//FLUSH
-		if(bFlush==true && Straight<5)
+		if(bFlush==true && bStraight==false)
 		{
 			rank = FLUSH;
 		}
@@ -153,11 +151,21 @@ public class Poker {
 			rank = FOUR_CARD; 
 		}
 		//STRAIGHT_FLUSH
-		if(bFlush==true && Straight==5)
+		if(bFlush==true && bStraight==true)
 		{
-			rank = STRAIGHT_FLUSH;
+			//ROYAL_FLUSH
+			if(numbers[0]>0 && numbers[9]>0 && numbers[10]>0 && numbers[11]>0 && numbers[12]>0)
+			{
+				rank = ROYAL_FLUSH;
+			}
+			//STRAIGHT_FLUSH
+			else
+			{
+				rank = STRAIGHT_FLUSH;
+			}
 		}
 		//ROYAL_FLUSH
+		 
 
 		//HIGH_CARD	
 		return rank;

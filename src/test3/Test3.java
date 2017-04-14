@@ -16,11 +16,12 @@ public class Test3 {
 	
 	
 	
-	static final char[][] test_player = {{'4','h'}, {'5','h'}, {'6','h'}, {'7','h'}, {'8','d'}};
+	static final char[][] test_player = {{'A','h'}, {'J','h'}, {'Q','h'}, {'K','h'}, {'T','h'}};
 	
 	
 	public Test3()
 	{
+		/*
 		//game1
 		Poker g1Player1 = new Poker(t1_p1);
 		Poker g1Player2 = new Poker(t1_p2);
@@ -42,7 +43,7 @@ public class Test3 {
 		
 		Poker.play(g3Player1, g3Player2);
 		
-		
+		*/
 		//test
 		Poker tp = new Poker(test_player);
 	}

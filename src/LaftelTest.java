@@ -15,7 +15,6 @@ public class LaftelTest {
 		System.out.println("\n------Laftel test3 start------\n");
 		Test3 test3 = new Test3();
 		
-
 	}
 
 }
