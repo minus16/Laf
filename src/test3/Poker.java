@@ -24,6 +24,7 @@ public class Poker {
 	private int [] emblem = {0, 0, 0, 0};//4
 	
 	private int myRank;
+	private int mMaxNumber = 0;
 	
 	
 	public Poker(char[][] c)
@@ -34,9 +35,21 @@ public class Poker {
 		System.out.println("MyRank : " + myRank);
 	}
 	
+	public int getMaxNumber()
+	{
+		//System.out.println("max : " + mMaxNumber);
+		return mMaxNumber;
+	}
+	
+	public int getMyRank()
+	{
+		return myRank;
+	}
+	
 	private int getRank()
 	{
 		int rank = HIGH_CARD;
+		int cRank = 0;
 
 		for(int i=0 ; i < mHand.length ; i++)
 		{
@@ -45,7 +58,13 @@ public class Poker {
 				//System.out.println(mHand[i][j]);
 				if(j==0)//numbers
 				{
-					numbers[getRankFromNumber(mHand[i][j])]++;
+					cRank = getRankFromNumber(mHand[i][j]);
+					numbers[cRank]++;
+					
+					//max number
+					if(mMaxNumber < cRank)
+						mMaxNumber = cRank;
+					
 				}
 				else //emblem
 				{
@@ -99,6 +118,16 @@ public class Poker {
 						
 			}
 			
+			
+			//for Ace
+			if(i==numbers.length-1 && Straight ==4)
+			{
+				if(numbers[0]==1)
+				{
+					Straight++;
+				}
+			}
+			
 			//straight
 			if(Straight >= 5)
 				bStraight= true;
@@ -115,44 +144,10 @@ public class Poker {
 			}
 		}
 		
-		//ONE_PAIR
-		if(pairs==1)
-		{
-			rank = ONE_PAIR;
-		}
-		//TWO_PAIR
-		if(pairs>1)
-		{
-			rank = TWO_PAIR;
-		}
-		//TRIPLE
-		if(triple>0)
-		{
-			rank = TRIPLE;
-		}
-		//STRAIGHT
-		if(bStraight==true)
-		{
-			rank = STRAIGHT;
-		}
-		//FLUSH
-		if(bFlush==true && bStraight==false)
-		{
-			rank = FLUSH;
-		}
-		//FULL_HOUSE
-		if(triple > 0 && pairs > 0)
-		{
-			rank = FULL_HOUSE;
-		}
-		//FOUR_CARD
-		if(fourcard > 0)
-		{
-			rank = FOUR_CARD; 
-		}
 		//STRAIGHT_FLUSH
 		if(bFlush==true && bStraight==true)
 		{
+			
 			//ROYAL_FLUSH
 			if(numbers[0]>0 && numbers[9]>0 && numbers[10]>0 && numbers[11]>0 && numbers[12]>0)
 			{
@@ -164,37 +159,107 @@ public class Poker {
 				rank = STRAIGHT_FLUSH;
 			}
 		}
-		//ROYAL_FLUSH
-		 
-
+		//FOUR_CARD
+		else if(fourcard > 0)
+		{
+			rank = FOUR_CARD; 
+		}
+		//FULL_HOUSE
+		else if(triple > 0 && pairs > 0)
+		{
+			rank = FULL_HOUSE;
+		}
+		//FLUSH
+		else if(bFlush==true && bStraight==false)
+		{
+			rank = FLUSH;
+		}
+		//STRAIGHT
+		else if(bStraight==true)
+		{
+			rank = STRAIGHT;
+		}
+		//TRIPLE
+		else if(triple>0)
+		{
+			rank = TRIPLE;
+		}
+		//TWO_PAIR
+		else if(pairs>1)
+		{
+			rank = TWO_PAIR;
+		}
+		//ONE_PAIR
+		else if(pairs==1)
+		{
+			rank = ONE_PAIR;
+		}
 		//HIGH_CARD	
+		else
+		{
+			rank = HIGH_CARD;
+		}
+
+		
 		return rank;
 	}
 	
 	
 	public static int play(Poker p1, Poker p2)
 	{
-		int rank1  = p1.getRank();
-		int rank2  = p2.getRank();
+		int PLAYER1 = 1;
+		int PLAYER2 = 2;
+		int DRAW = 0;
+		
+		int result = -1;
+		
+		int rank1  = p1.getMyRank();
+		//System.out.println("rank 1 : " + rank1);
+		int rank2  = p2.getMyRank();
+		//System.out.println("rank 2 : " + rank2);
 		if(rank1>rank2)
 		{
+			result = PLAYER1;
 			System.out.println("Player 1 win");
 			return 1;
 		}
 		else if(rank1<rank2)
 		{
+			result = PLAYER2;
 			System.out.println("Player 2 win");
 			return 2;
 		}
 		else if(rank1==rank2)
 		{
-			System.out.println("Draw");
-			return 0;
+			if(rank1 == HIGH_CARD)
+			{
+				if(p1.getMaxNumber() > p2.getMaxNumber())
+				{
+					result = PLAYER1;
+					System.out.println("Player 1 win");
+				}
+				else if(p1.getMaxNumber() < p2.getMaxNumber())
+				{
+					result = PLAYER2;
+					System.out.println("Player 2 win");
+				}
+				else
+				{
+					result = DRAW;
+					System.out.println("Draw");
+				}
+			}
+			else
+			{
+				result = DRAW;
+				System.out.println("Draw");
+			}
 		}
 		else
 		{
-			return -1;
+			return result;
 		}
+		return result;
 	}
 	
 	

@@ -16,36 +16,36 @@ public class Test3 {
 	
 	
 	
-	static final char[][] test_player = {{'A','h'}, {'J','h'}, {'Q','h'}, {'K','h'}, {'T','h'}};
+	static final char[][] test_player = {{'A','h'}, {'2','h'}, {'4','h'}, {'5','h'}, {'6','d'}};
+	static final char[][] test_player2 = {{'7','h'}, {'2','h'}, {'4','h'}, {'5','h'}, {'6','d'}};
 	
 	
 	public Test3()
 	{
+		
 		/*
 		//game1
 		Poker g1Player1 = new Poker(t1_p1);
 		Poker g1Player2 = new Poker(t1_p2);
-		
 		Poker.play(g1Player1, g1Player2);
 		
 		
 		//game2
 		Poker g2Player1 = new Poker(t2_p1);
 		Poker g2Player2 = new Poker(t2_p2);
-		
 		Poker.play(g2Player1, g2Player2);
-		
 		
 		
 		//game3
 		Poker g3Player1 = new Poker(t3_p1);
 		Poker g3Player2 = new Poker(t3_p2);
-		
 		Poker.play(g3Player1, g3Player2);
-		
 		*/
+		
 		//test
 		Poker tp = new Poker(test_player);
+		Poker tp2 = new Poker(test_player2);
+		Poker.play(tp, tp2);
 	}
 
 }
