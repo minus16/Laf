@@ -32,13 +32,12 @@ public class Test2 {
 	
 	private String reverseWithTag(String data)
 	{
-		//tags put in to map
+		//tags put in to ArrayList
 		ArrayList<TagStruct> tags = new ArrayList<TagStruct>();
 		tags = tagsToList(data);
 		
 		//remove tags from String and reverse
 		String reverseData = reverseString(removeTags(data));		
-
 		
 		//add tags
 		int currentPos = -1;
@@ -143,6 +142,7 @@ public class Test2 {
 	    }
 	    return index;
 	}
+	/////////////////////////////////////////////////////////////////////////
 	
 	
 	private String reverseString(String s)
