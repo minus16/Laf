@@ -47,17 +47,14 @@ public class Test1 {
 		
 		String result = "";	
 
-		//Numbers
+		//prevNumber
 		int nPrevNumber = -1;
-		int nStartNumber = -1;
-		int nStartPosition = -1;
-		int nEndNumber = -1;
 		
 		
 		//flag
 		boolean bSequenceFlag = false;
 		
-		//empty case
+		//empty data
 		if(data.length<=0)
 		{
 			return result;
