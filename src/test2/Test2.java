@@ -40,11 +40,9 @@ public class Test2 {
 		//remove tags from String and reverse
 		String reverseData = reverseString(removeTags(data));		
 
-		String resultData = reverseData;
 		
 		//add tags
 		int currentPos = -1;
-		int nAddtemp = 0;
 		int nAdd = 0;
 		int nPosition = 0;
 		

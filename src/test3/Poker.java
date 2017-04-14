@@ -24,7 +24,18 @@ public class Poker {
 	private int [] emblem = {0, 0, 0, 0};//4
 	
 	private int myRank;
-	private int mMaxNumber = 0;
+	
+	//high numbers
+	private int mHighNumber = -1;
+	private int mHighPair1 = -1;
+	private int mHighPair2 = -1;
+	private int mHighTriple = -1;
+	
+	
+	public static final int PLAYER1 = 1;
+	public static final int PLAYER2 = 2;
+	public static final int DRAW = 0;
+	
 	
 	
 	public Poker(char[][] c)
@@ -32,14 +43,9 @@ public class Poker {
 		mHand = c;
 		myRank = getRank();
 		
-		System.out.println("MyRank : " + myRank);
+		//System.out.println("MyRank : " + myRank);
 	}
 	
-	public int getMaxNumber()
-	{
-		//System.out.println("max : " + mMaxNumber);
-		return mMaxNumber;
-	}
 	
 	public int getMyRank()
 	{
@@ -62,8 +68,8 @@ public class Poker {
 					numbers[cRank]++;
 					
 					//max number
-					if(mMaxNumber < cRank)
-						mMaxNumber = cRank;
+					if(mHighNumber < cRank)
+						mHighNumber = cRank;
 					
 				}
 				else //emblem
@@ -100,16 +106,35 @@ public class Poker {
 				case 2:
 					pairs++;
 					Straight=0;
+					if(mHighPair1==-1)
+					{
+						mHighPair1=i;
+					}
+					else
+					{
+						if(mHighPair1 < i)
+						{
+							int temp = mHighPair1;
+							mHighPair1 = i;
+							mHighPair2 = temp;
+						}
+						else
+						{
+							mHighPair2 = i;
+						}
+					}
 					break;
 					
 				case 3:
 					triple++;
 					Straight=0;
+					mHighTriple = i;
 					break;
 					
 				case 4:
 					fourcard++;
 					Straight=0;
+					mHighNumber = i;
 					break;
 					
 				default:
@@ -133,8 +158,22 @@ public class Poker {
 				bStraight= true;
 		}
 		
+		//for ace2
+		if(mHighPair1 == 0)
+			mHighPair1 = 14;
+		if(mHighPair2 == 0)
+			mHighPair2 = 14;
+		if(mHighPair1 < mHighPair2)
+		{
+			int temp = mHighPair1;
+			mHighPair1 = mHighPair2;
+			mHighPair2 = temp;
+		}		
+		if(mHighTriple == 0)
+			mHighPair1 = 14;
 		
-		//find sameEmblem
+		
+		//find sameEmblem for FLUSH
 		boolean bFlush = false;
 		for(int i=0 ; i<emblem.length ; i++)
 		{
@@ -162,7 +201,7 @@ public class Poker {
 		//FOUR_CARD
 		else if(fourcard > 0)
 		{
-			rank = FOUR_CARD; 
+			rank = FOUR_CARD;
 		}
 		//FULL_HOUSE
 		else if(triple > 0 && pairs > 0)
@@ -205,12 +244,8 @@ public class Poker {
 	}
 	
 	
-	public static int play(Poker p1, Poker p2)
-	{
-		int PLAYER1 = 1;
-		int PLAYER2 = 2;
-		int DRAW = 0;
-		
+	public static void play(Poker p1, Poker p2)
+	{	
 		int result = -1;
 		
 		int rank1  = p1.getMyRank();
@@ -220,46 +255,92 @@ public class Poker {
 		if(rank1>rank2)
 		{
 			result = PLAYER1;
-			System.out.println("Player 1 win");
-			return 1;
 		}
 		else if(rank1<rank2)
 		{
 			result = PLAYER2;
-			System.out.println("Player 2 win");
-			return 2;
-		}
-		else if(rank1==rank2)
-		{
-			if(rank1 == HIGH_CARD)
-			{
-				if(p1.getMaxNumber() > p2.getMaxNumber())
-				{
-					result = PLAYER1;
-					System.out.println("Player 1 win");
-				}
-				else if(p1.getMaxNumber() < p2.getMaxNumber())
-				{
-					result = PLAYER2;
-					System.out.println("Player 2 win");
-				}
-				else
-				{
-					result = DRAW;
-					System.out.println("Draw");
-				}
-			}
-			else
-			{
-				result = DRAW;
-				System.out.println("Draw");
-			}
 		}
 		else
 		{
-			return result;
+			//compare HighNumbers	
+			result = compareHighNumbers(p1, p2);
+		}
+		showResult(result);
+	}
+	private static int compareHighNumbers(Poker p1, Poker p2)
+	{
+		/*
+		System.out.println("mHighNumber : " + p1.mHighNumber);
+		System.out.println("mHighPair1 : " + p1.mHighPair1);
+		System.out.println("mHighPair2 : " + p1.mHighPair2);
+		System.out.println("mHighTriple : " + p1.mHighTriple);
+
+		System.out.println("mHighNumber : " + p2.mHighNumber);
+		System.out.println("mHighPair1 : " + p2.mHighPair1);
+		System.out.println("mHighPair2 : " + p2.mHighPair2);
+		System.out.println("mHighTriple : " + p2.mHighTriple);
+		*/
+		
+		
+		int result = DRAW;
+		if(p1.mHighTriple > p2.mHighTriple)
+		{
+			result = PLAYER1;
+		}
+		else if(p1.mHighTriple < p2.mHighTriple)
+		{
+			result = PLAYER2;
+		}	
+		else//
+		{
+			if(p1.mHighPair1 > p2.mHighPair1)
+			{
+				result = PLAYER1;
+			}
+			else if(p1.mHighPair1 < p2.mHighPair1)
+			{
+				result = PLAYER2;
+			}	
+			else//
+			{
+				if(p1.mHighPair2 > p2.mHighPair2)
+				{
+					result = PLAYER1;
+				}
+				else if(p1.mHighPair2 < p2.mHighPair2)
+				{
+					result = PLAYER2;
+				}	
+				else//
+				{
+					if(p1.mHighNumber > p2.mHighNumber)
+					{
+						result = PLAYER1;
+					}
+					else if(p1.mHighNumber < p2.mHighNumber)
+					{
+						result = PLAYER2;
+					}	
+					else//
+					{
+						 result = DRAW;
+					}
+				}
+			}
 		}
 		return result;
+	}
+	
+	public static void showResult(int n)
+	{
+		if(n==PLAYER1)
+			System.out.println("Player 1 Win");
+		else if(n==PLAYER2)
+			System.out.println("Player 2 Win");
+		else if(n==DRAW)
+			System.out.println("Draw");
+		else
+			System.out.println("Oops, There is an Error");
 	}
 	
 	

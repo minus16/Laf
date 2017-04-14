@@ -23,11 +23,12 @@ public class Test3 {
 	public Test3()
 	{
 		
-		/*
+
 		//game1
 		Poker g1Player1 = new Poker(t1_p1);
 		Poker g1Player2 = new Poker(t1_p2);
 		Poker.play(g1Player1, g1Player2);
+		
 		
 		
 		//game2
@@ -40,12 +41,15 @@ public class Test3 {
 		Poker g3Player1 = new Poker(t3_p1);
 		Poker g3Player2 = new Poker(t3_p2);
 		Poker.play(g3Player1, g3Player2);
-		*/
 		
+		
+		/*
 		//test
 		Poker tp = new Poker(test_player);
 		Poker tp2 = new Poker(test_player2);
 		Poker.play(tp, tp2);
+		*/
+		
 	}
 
 }
