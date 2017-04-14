@@ -6,13 +6,13 @@ public class LaftelTest {
 
 	public static void main(String[] args) {
 		
-		System.out.println("---Laftel test1 start---");
-		Test1 test1 = new Test1();	
+		System.out.println("\n------Laftel test1 start------\n");
+		Test1 test1 = new Test1();
 		
-		System.out.println("---Laftel test2 start---");
+		System.out.println("\n------Laftel test2 start------\n");
 		Test2 test2 = new Test2();
 
-		System.out.println("---Laftel test3 start---");
+		System.out.println("\n------Laftel test3 start------\n");
 		Test3 test3 = new Test3();
 		
 

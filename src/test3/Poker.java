@@ -14,59 +14,208 @@ public class Poker {
 	static final int ROYAL_FLUSH  	= 109;
 	
 	
-	/*
-	 * 	
-	static final char[][] t1_p1 = {{'A','s'}, {'8','d'}, {'A','d'}, {'8','c'}, {'5','d'}};
-	static final char[][] t1_p2 = {{'Q','h'}, {'Q','s'}, {'J','d'}, {'K','d'}, {'J','c'}};
+	private static final char[] RANKS  = { 'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K' };
+	private static final char[] EMBLEM = { 's', 'd', 'h', 'c' };
 	
-	static final char[][] t2_p1 = {{'K','s'}, {'K','c'}, {'J','d'}, {'K','d'}, {'J','c'}};
-	static final char[][] t2_p2 = {{'J','h'}, {'J','s'}, {'J','d'}, {'K','d'}, {'J','c'}};
-	
-	static final char[][] t3_p1 = {{'A','d'}, {'K','h'}, {'A','c'}, {'7','h'}, {'7','d'}};
-	static final char[][] t3_p2 = {{'A','h'}, {'K','h'}, {'A','c'}, {'7','h'}, {'7','d'}};
-	 */
 	
 	private char[][] mHand = null;
 	
-	private int myGrade;
+	private int [] numbers = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };//13
+	private int [] emblem = {0, 0, 0, 0};//4
+	
+	private int myRank;
 	
 	
 	public Poker(char[][] c)
 	{
 		mHand = c;
-		myGrade = getMyGrade();
+		myRank = getRank();
+		
+		System.out.println("MyRank : " + myRank);
 	}
 	
-	private int getMyGrade()
+	private int getRank()
 	{
-		//ROYAL_FLUSH
+		int rank = HIGH_CARD;
 		
-		//STRAIGHT_FLUSH
 		
-		//FOUR_CARD
+		for(int i=0 ; i < mHand.length ; i++)
+		{
+			for(int j=0 ; j < mHand[i].length; j++)
+			{
+				//System.out.println(mHand[i][j]);
+				if(j==0)//numbers
+				{
+					numbers[getRankFromNumber(mHand[i][j])]++;
+				}
+				else //emblem
+				{
+					emblem[getRankFromEmblem(mHand[i][j])]++;
+				}	
+			}
+		}
 		
-		//FULL_HOUSE
+		//find sameNumbers
+		int pairs = 0;
+		int triple = 0;
+		int fourcard = 0;
 		
-		//FLUSH
+		//find straight
+		int Straight = 0;
+		boolean bStraight = false;
 		
-		//STRAIGHT
+		for(int i=0 ; i<numbers.length ; i++)
+		{
+			//System.out.println(numbers[i]);
+			
+			switch(numbers[i])
+			{
+				
+				case 0:
+					Straight=0;
+					break;
+					
+				case 1:
+					Straight++;
+					break;
+					
+				case 2:
+					pairs++;
+					Straight=0;
+					break;
+					
+				case 3:
+					triple++;
+					Straight=0;
+					break;
+					
+				case 4:
+					fourcard++;
+					Straight=0;
+					break;
+					
+				default:
+					Straight=0;
+					break;
+						
+			}
+			
+			//straight
+			if(Straight >= 5)
+				bStraight= true;
+		}
 		
-		//TRIPLE
+		System.out.println("Straight : " + Straight);
 		
-		//TWO_PAIR
+		//find sameEmblem
+		boolean bFlush = false;
+		for(int i=0 ; i<emblem.length ; i++)
+		{
+			if(emblem[i] > 4)
+			{
+				bFlush = true;
+			}
+		}
 		
 		//ONE_PAIR
-		
-		//HIGH_CARD
-		
-		
-		return 0;
+		if(pairs==1)
+		{
+			rank = ONE_PAIR;
+		}
+		//TWO_PAIR
+		if(pairs>1)
+		{
+			rank = TWO_PAIR;
+		}
+		//TRIPLE
+		if(triple>0)
+		{
+			rank = TRIPLE;
+		}
+		//STRAIGHT
+		if(Straight==5)
+		{
+			rank = STRAIGHT;
+		}
+		//FLUSH
+		if(bFlush==true && Straight<5)
+		{
+			rank = FLUSH;
+		}
+		//FULL_HOUSE
+		if(triple > 0 && pairs > 0)
+		{
+			rank = FULL_HOUSE;
+		}
+		//FOUR_CARD
+		if(fourcard > 0)
+		{
+			rank = FOUR_CARD; 
+		}
+		//STRAIGHT_FLUSH
+		if(bFlush==true && Straight==5)
+		{
+			rank = STRAIGHT_FLUSH;
+		}
+		//ROYAL_FLUSH
+
+		//HIGH_CARD	
+		return rank;
 	}
 	
 	
-	public int play(Poker p1, Poker p2)
+	public static int play(Poker p1, Poker p2)
 	{
-		return 0;
+		int rank1  = p1.getRank();
+		int rank2  = p2.getRank();
+		if(rank1>rank2)
+		{
+			System.out.println("Player 1 win");
+			return 1;
+		}
+		else if(rank1<rank2)
+		{
+			System.out.println("Player 2 win");
+			return 2;
+		}
+		else if(rank1==rank2)
+		{
+			System.out.println("Draw");
+			return 0;
+		}
+		else
+		{
+			return -1;
+		}
+	}
+	
+	
+	//get number rank
+	private int getRankFromNumber(char c)
+	{
+		for(int i=0 ; i < RANKS.length ; i++)
+		{
+			if(RANKS[i]==c)
+			{
+				return i;
+			}
+		}
+		
+		return -1;
+	}
+	
+	//get emblem rank
+	private int getRankFromEmblem(char c)
+	{
+		for(int i=0 ; i < EMBLEM.length ; i++)
+		{
+			if(EMBLEM[i]==c)
+			{
+				return i;
+			}
+		}
+		
+		return -1;
 	}
 
 }
